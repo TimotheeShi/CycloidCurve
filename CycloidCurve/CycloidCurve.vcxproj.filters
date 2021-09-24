@@ -18,5 +18,13 @@
     <ClCompile Include="CycloidCurve.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CycloidGear.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CycloidGear.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
