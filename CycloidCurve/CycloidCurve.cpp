@@ -2,10 +2,19 @@
 //
 
 #include <iostream>
+#include "Preprocess.cpp"
+#include "CycloidGear.h"
+
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    string file_name = "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031.txt";
+    Preprocess original;
+    CycloidGear rv500N;
+    original.readData(file_name, rv500N.zeiss, rv500N.zeiss_ang);
+
+    return 0;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

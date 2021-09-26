@@ -21,9 +21,15 @@
     <ClCompile Include="CycloidGear.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Preprocess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CycloidGear.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Preprocess.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

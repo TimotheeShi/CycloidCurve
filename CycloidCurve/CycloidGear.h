@@ -1,8 +1,11 @@
 #pragma once
 #include <math.h>
+#include <vector>
+#include <map>
 
 class CycloidGear
 {
+public:
 	double CalTheoreticalCurve(double theta) {
 			double x0, y0;
 			x0 = Rz * (sin(theta) - k1 / Zb * sin(Zb * theta));
@@ -17,11 +20,13 @@ class CycloidGear
 			return sqrt(x1 * x1 + y1 * y1);
 	}
 
-private:
+
 	double Rz;
 	double Za;
 	double rz;
 	double e;
+	std::vector<std::pair<double, double>> zeiss;
+	std::vector<double> zeiss_ang;
 
 
 	double Zb = Za + 1.0;
