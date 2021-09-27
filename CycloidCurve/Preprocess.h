@@ -102,12 +102,12 @@ private:
 		}
 		auto itr = std::find(str.cbegin(), str.cend(), '.');
 		for(auto itr1 = b; itr1 != itr; ++itr1) {
-			double addend = (*itr1) - '0';
+			double addend = double((*itr1) - '0');
 			res1 = res1 * 10 + addend;
 		}
 		if (itr != str.cend()) {
 			for (auto itr2 = --str.cend(); itr2 != itr; --itr2) {
-				double addend = (*itr2) - '0';
+				double addend = double((*itr2) - '0');
 				res2 = 0.1 * res2 + addend;
 			}
 		}
