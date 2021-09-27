@@ -2,18 +2,35 @@
 //
 
 #include <iostream>
-#include "Preprocess.cpp"
+#include "Preprocess.h"
 #include "CycloidGear.h"
 
 using namespace std;
 
 int main()
 {
-    string file_name = "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031.txt";
+    string foldername;
+    string gearname;
+    string file_name; //= "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031.txt";
+    string file_name1; //= "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031_pol.txt";
+    cout << "输入原始点云所在文件夹位置:" << endl;
+    getline(cin, foldername);
+    cout << endl << "\n输入减速机拆机编号（例如，10C输入T）:" << endl;
+    getline(cin, gearname);
     Preprocess original;
-    CycloidGear rv500N;
-    original.readData(file_name, rv500N.zeiss, rv500N.zeiss_ang);
-
+    vector<string> svec{"011", "012", "021", "022", "031", "032" };
+    for (const string& postfix : svec) {
+        CycloidGear rv;
+        file_name = foldername + "\\" + gearname + postfix + ".txt";
+        file_name1 = foldername + "\\" + gearname + postfix + "_converted.txt";
+        cout << endl << "<" << file_name << "> is processing..." << endl;
+        original.readData(file_name, rv.zeiss, rv.zeiss_ang);
+        if (original.Car2Pol(rv.zeiss, rv.zeiss_pol))
+            cout << "Cloud Points are converted successfully!" << endl;
+        original.writeData(file_name1, rv.zeiss);
+    }
+    cout << endl << "Conversion finished!" << endl;
+    getchar();
     return 0;
 }
 

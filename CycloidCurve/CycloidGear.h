@@ -6,6 +6,7 @@
 class CycloidGear
 {
 public:
+	CycloidGear() = default;
 	double CalTheoreticalCurve(double theta) {
 			double x0, y0;
 			x0 = Rz * (sin(theta) - k1 / Zb * sin(Zb * theta));
@@ -27,6 +28,7 @@ public:
 	double e;
 	std::vector<std::pair<double, double>> zeiss;
 	std::vector<double> zeiss_ang;
+	std::vector<std::pair<double, double>> zeiss_pol;
 
 
 	double Zb = Za + 1.0;

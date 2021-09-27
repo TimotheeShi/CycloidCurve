@@ -7,16 +7,20 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CycloidCurve", "CycloidCurv
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|Default = Release|Default
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{210586FD-1382-47C0-B7F5-354E28DC888D}.Debug|Default.ActiveCfg = Debug|Win32
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Debug|x64.ActiveCfg = Debug|x64
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Debug|x64.Build.0 = Debug|x64
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Debug|x86.ActiveCfg = Debug|Win32
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Debug|x86.Build.0 = Debug|Win32
+		{210586FD-1382-47C0-B7F5-354E28DC888D}.Release|Default.ActiveCfg = Release|Win32
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Release|x64.ActiveCfg = Release|x64
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Release|x64.Build.0 = Release|x64
 		{210586FD-1382-47C0-B7F5-354E28DC888D}.Release|x86.ActiveCfg = Release|Win32
@@ -27,5 +31,11 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BAA5EC6-0D7D-4A19-95D6-8AE5216D56F3}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Debug|x64 = Debug|x64
+		Release|Default = Release|Default
+		Release|x64 = Release|x64
 	EndGlobalSection
 EndGlobal
