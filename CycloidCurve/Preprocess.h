@@ -58,7 +58,7 @@ public:
 private:
 
 	double CalAngle(double x, double y) {
-		return std::atan2(x, y);
+		return std::atan2(y, x);
 	}
 
 	double CalModule(double x, double y) {

@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Preprocess.h"
 #include "CycloidGear.h"
+#include "PointInspection.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ int main()
     cout << endl << "\n输入减速机拆机编号（例如，10C输入T）:" << endl;
     getline(cin, gearname);
     Preprocess original;
+    PointInspection pi;
     vector<string> svec{"011", "012", "021", "022", "031", "032" };
     for (const string& postfix : svec) {
         CycloidGear rv;
@@ -27,6 +29,9 @@ int main()
         original.readData(file_name, rv.zeiss, rv.zeiss_ang);
         if (original.Car2Pol(rv.zeiss, rv.zeiss_pol))
             cout << "Cloud Points are converted successfully!" << endl;
+        if (pi.AxisToAddendum(rv.zeiss,rv.zeiss_pol))
+            pi.PointRotation(rv.zeiss, rv.zeiss_pol, 3.1415926/51);
+        pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol);
         original.writeData(file_name1, rv.zeiss);
     }
     cout << endl << "Conversion finished!" << endl;
