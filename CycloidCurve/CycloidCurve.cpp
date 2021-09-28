@@ -25,14 +25,23 @@ int main()
         CycloidGear rv;
         file_name = foldername + "\\" + gearname + postfix + ".txt";
         file_name1 = foldername + "\\" + gearname + postfix + "_converted.txt";
-        cout << endl << "<" << file_name << "> is processing..." << endl;
-        original.readData(file_name, rv.zeiss, rv.zeiss_ang);
-        if (original.Car2Pol(rv.zeiss, rv.zeiss_pol))
-            cout << "Cloud Points are converted successfully!" << endl;
-        if (pi.AxisToAddendum(rv.zeiss,rv.zeiss_pol))
-            pi.PointRotation(rv.zeiss, rv.zeiss_pol, 3.1415926/51);
-        pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol);
-        original.writeData(file_name1, rv.zeiss);
+        ifstream ifs(file_name);
+        if (ifs) {
+            ifs.close();
+            cout << endl << "<" << file_name << "> is processing..." << endl;
+            original.readData(file_name, rv.zeiss, rv.zeiss_ang);
+            if (original.Car2Pol(rv.zeiss, rv.zeiss_pol))
+                cout << "Cloud Points are converted successfully!" << endl;
+            if (pi.DisorderInspection(rv.zeiss_pol)) {
+                pi.DuplicateInspection(rv.zeiss);
+                if (pi.AxisToAddendum(rv.zeiss, rv.zeiss_pol))
+                    pi.PointRotation(rv.zeiss, rv.zeiss_pol, 3.1415926 / 51);
+                pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol);
+                original.writeData(file_name1, rv.zeiss_pol);
+            }
+        }
+        else
+            cout << file_name << "does not exist!" << endl;     
     }
     cout << endl << "Conversion finished!" << endl;
     getchar();

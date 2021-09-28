@@ -66,6 +66,47 @@ public:
 		return true;
 	}
 
+	bool DuplicateInspection(std::vector<std::pair<double, double>>& zeiss) {
+		double prev = 0.0, curr = 0.0;
+		auto itr1 = zeiss.cbegin();
+		auto itr2 = ++zeiss.cbegin();
+		prev = Distance(*(itr1++), *(itr2++));
+		curr = Distance(*(itr1++), *(itr2++));
+		for (; itr2 != zeiss.cend();) {
+			if (curr <= 0.5 * prev)
+				break;
+			prev = curr;
+			curr = Distance(*(itr1++), *(itr2++));
+		}
+		if (itr2 != zeiss.cend()) {
+			std::cout << itr1 - zeiss.cbegin() + 1 << "th and " << itr2 - zeiss.cbegin() + 1 << "th are duplicated!" << std::endl;
+			return true;
+		}
+
+		return false;
+	}
+
+	bool DisorderInspection(std::vector<std::pair<double, double>>& zeiss_pol) {
+		auto itr1 = zeiss_pol.cbegin(), itr2 = ++zeiss_pol.cbegin();
+		for (; itr2 != zeiss_pol.cend();++itr1, ++itr2) {
+			if (itr2->second - itr1->second < 0 && itr2->second - itr1->second > -3.14)
+				break;
+		}
+		if (itr2 != zeiss_pol.cend()) {
+			std::cout << itr1 - zeiss_pol.cbegin() + 1 << "th and " << itr2 - zeiss_pol.cbegin() + 1 << "th are disordered!" << std::endl;
+			return false;
+		}
+		return true;
+	}
+
+	double Distance(const std::pair<double, double> point1, const std::pair<double, double> point2) {
+		double distance = 0.0;
+		double dx = point1.first - point2.first;
+		double dy = point1.second - point2.second;
+		distance = sqrt(dx * dx + dy * dy);
+		return distance;
+	}
+
 	bool PointRotation(std::vector<std::pair<double, double>>& zeiss, std::vector<std::pair<double, double>>& zeiss_ang, double rot_ang = 0.0) {
 		std::vector<std::pair<double, double>> new_zeiss;
 		for (auto& point : zeiss_ang) {

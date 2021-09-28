@@ -29,6 +29,7 @@ public:
 		}
 		Info(zeiss);
 		flag = true;
+		ifs.close();
 		return flag;
 	}
 
@@ -58,7 +59,8 @@ public:
 private:
 
 	double CalAngle(double x, double y) {
-		return std::atan2(y, x);
+		double angle = std::atan2(y, x);
+		return (angle >= 0) ? angle : 3.1415926 * 2 + angle;
 	}
 
 	double CalModule(double x, double y) {
