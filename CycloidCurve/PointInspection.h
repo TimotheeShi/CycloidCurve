@@ -40,14 +40,14 @@ public:
 		return test1;
 	}
 
-	bool SwitchInitialPoint(std::vector<std::pair<double, double>>& zeiss, std::vector<std::pair<double, double>>& zeiss_ang) {
+
+	bool SwitchInitialPoint(std::vector<std::pair<double, double>>& zeiss, std::vector<std::pair<double, double>>& zeiss_ang, const int Z) {
 		double maxradium = zeiss_ang[0].first;
-		double radium = 0;
-		int argmax = 0, i = zeiss_ang.size() - 100;
-		for (auto itr = zeiss_ang.cend() - 100; itr != zeiss_ang.cend(); ++itr) {
-			if (maxradium < (radium = itr->first)) {
+		int argmax = 0, i = zeiss_ang.size() - zeiss_ang.size()/ (0.9 * Z);
+		for (auto itr = zeiss_ang.cend() - zeiss_ang.size() / (0.9 * Z); itr != zeiss_ang.cend(); ++itr) {
+			if (maxradium < itr->first) {
 				argmax = i;
-				maxradium = radium;
+				maxradium = itr->first;
 			}
 			i++;
 		}
@@ -73,13 +73,19 @@ public:
 		prev = Distance(*(itr1++), *(itr2++));
 		curr = Distance(*(itr1++), *(itr2++));
 		for (; itr2 != zeiss.cend();) {
-			if (curr <= 0.5 * prev)
+			if (curr <= 0.2 * prev)
 				break;
 			prev = curr;
 			curr = Distance(*(itr1++), *(itr2++));
 		}
 		if (itr2 != zeiss.cend()) {
-			std::cout << itr1 - zeiss.cbegin() + 1 << "th and " << itr2 - zeiss.cbegin() + 1 << "th are duplicated!" << std::endl;
+			std::cout << "The #" << itr1 - zeiss.cbegin() + 1 << " and #" << itr2 - zeiss.cbegin() + 1 << " are duplicated!" << std::endl;
+			std::cout << "Please deal with duplicated points before the conversion!" << std::endl;
+			return true;
+		}
+		if (Distance(*(zeiss.cbegin()), *(--zeiss.cend())) <= 0.5 * prev) {
+			std::cout << "The #1  and #" << zeiss.size() << " are duplicated!" << std::endl;
+			std::cout << "Please deal with duplicated points before the conversion!" << std::endl;
 			return true;
 		}
 
@@ -93,7 +99,13 @@ public:
 				break;
 		}
 		if (itr2 != zeiss_pol.cend()) {
-			std::cout << itr1 - zeiss_pol.cbegin() + 1 << "th and " << itr2 - zeiss_pol.cbegin() + 1 << "th are disordered!" << std::endl;
+			std::cout << "The #" << itr1 - zeiss_pol.cbegin() + 1 << " OR #" << itr2 - zeiss_pol.cbegin() + 1 << " may disordered!" << std::endl;
+			std::cout << "Please deal with disorder points before the conversion!" << std::endl;
+			return false;
+		}
+		if (zeiss_pol.cbegin()->second < (--zeiss_pol.cend())->second) {
+			std::cout << "The #1 OR #" << zeiss_pol.size() << " may disordered!" << std::endl;
+			std::cout << "Please deal with disorder points before the conversion!" << std::endl;
 			return false;
 		}
 		return true;

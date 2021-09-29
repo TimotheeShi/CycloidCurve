@@ -43,7 +43,7 @@ public:
 		return false;
 	}
 
-	void writeData(std::string file_name, const std::vector < std::pair<double, double>>& data) {
+	void writeDataDev(std::string file_name, const std::vector < std::pair<double, double>>& data) {
 		std::ofstream ofs(file_name);
 		if (!ofs) {
 			std::cout << "file open error!" << std::endl;
@@ -54,6 +54,18 @@ public:
 			ofs << point.first << "," << point.second << ",0," << std::endl;
 		}
 		ofs << "$END" << std::endl;
+	}
+
+	void writeDataMod(std::string file_name, const std::vector < std::pair<double, double>>& data) {
+		std::ofstream ofs(file_name);
+		if (!ofs) {
+			std::cout << "file open error!" << std::endl;
+			return;
+		}
+		ofs << std::endl;
+		for (const auto& point : data) {
+			ofs << point.first << " " << point.second << " 0 " << std::endl;
+		}
 	}
 
 private:
