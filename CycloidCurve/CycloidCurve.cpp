@@ -59,9 +59,9 @@ int main()
                     if (pi.AxisToAddendum(rv.zeiss, rv.zeiss_pol))
                         pi.PointRotation(rv.zeiss, rv.zeiss_pol, 3.1415926 / Z);
                     pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol, Z);
-                    original.writeDataDev(file_name10, rv.zeiss);
-                    original.writeDataMod(file_name30, rv.zeiss);
-                    original.writeDataDev(file_name20, rv.zeiss_pol);
+                    original.writeDataDev(file_name1, rv.zeiss);
+                    original.writeDataMod(file_name3, rv.zeiss);
+                    original.writeDataDev(file_name2, rv.zeiss_pol);
                     flag = true;
                 }
                 //pi.PointRotation(rv.zeiss, rv.zeiss_pol, -(rv.zeiss_pol[0].second));   

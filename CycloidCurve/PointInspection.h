@@ -95,7 +95,7 @@ public:
 	bool DisorderInspection(std::vector<std::pair<double, double>>& zeiss_pol) {
 		auto itr1 = zeiss_pol.cbegin(), itr2 = ++zeiss_pol.cbegin();
 		for (; itr2 != zeiss_pol.cend();++itr1, ++itr2) {
-			if (itr2->second - itr1->second < 0 && itr2->second - itr1->second > -3.14)
+			if (itr2->second - itr1->second < 0 && itr2->second - itr1->second < -6.28)
 				break;
 		}
 		if (itr2 != zeiss_pol.cend()) {
@@ -103,11 +103,11 @@ public:
 			std::cout << "Please deal with disorder points before the conversion!" << std::endl;
 			return false;
 		}
-		if (zeiss_pol.cbegin()->second < (--zeiss_pol.cend())->second) {
-			std::cout << "The #1 OR #" << zeiss_pol.size() << " may disordered!" << std::endl;
-			std::cout << "Please deal with disorder points before the conversion!" << std::endl;
-			return false;
-		}
+		//if (zeiss_pol.cbegin()->second > (--zeiss_pol.cend())->second) {
+		//	std::cout << "The #1 OR #" << zeiss_pol.size() << " may disordered!" << std::endl;
+		//	std::cout << "Please deal with disorder points before the conversion!" << std::endl;
+		//	return false;
+		//}
 		return true;
 	}
 
