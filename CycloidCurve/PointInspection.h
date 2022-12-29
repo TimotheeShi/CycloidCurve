@@ -53,6 +53,31 @@ public:
 		}
 		std::vector<std::pair<double, double>> new_zeiss;
 		std::vector<std::pair<double, double>> new_zeiss_pol;
+		for (int i = argmax + 3; i != zeiss.size(); i++) {
+			new_zeiss.push_back(zeiss[i]);
+			new_zeiss_pol.push_back(zeiss_pol[i]);
+		}
+		for (int i = 0; i < argmax + 3; i++) {
+			new_zeiss.push_back(zeiss[i]);
+			new_zeiss_pol.push_back(zeiss_pol[i]);
+		}
+		std::swap(zeiss, new_zeiss);
+		std::swap(zeiss_pol, new_zeiss_pol);
+		return true;
+	}
+
+	bool SwitchInitialPoint1(std::vector<std::pair<double, double>>& zeiss, std::vector<std::pair<double, double>>& zeiss_pol, const int Z) {
+		double maxradium = zeiss_pol[0].first;
+		int argmax = 0, i = zeiss_pol.size() - zeiss_pol.size() / (0.9 * Z);
+		for (auto itr = zeiss_pol.cend() - zeiss_pol.size() / (0.9 * Z); itr != zeiss_pol.cend(); ++itr) {
+			if (maxradium > itr->first) {
+				argmax = i;
+				maxradium = itr->first;
+			}
+			i++;
+		}
+		std::vector<std::pair<double, double>> new_zeiss;
+		std::vector<std::pair<double, double>> new_zeiss_pol;
 		for (int i = argmax; i != zeiss.size(); i++) {
 			new_zeiss.push_back(zeiss[i]);
 			new_zeiss_pol.push_back(zeiss_pol[i]);

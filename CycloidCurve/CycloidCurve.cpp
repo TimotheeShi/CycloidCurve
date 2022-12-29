@@ -10,77 +10,72 @@ using namespace std;
 
 int main()
 {
-    string foldername;
-    string gearname;
-    string file_name; //= "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031.txt";
-    string file_name1, file_name2, file_name3; //= "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031_pol.txt";
-    string file_name10, file_name20, file_name30;
-    string sharedFolder = "\\\\172.21.110.160\\技术部共享\\RV-项目\\03-数据分析\\摆线点云\\";
-    int Z = 0;
-    cout << "输入原始点云所在文件夹位置:" << endl;
-    getline(cin, foldername);
-    cout << endl << "\n输入样机拆机编号（例如，10C输入T01 T02 T03）:" << endl;
-    getline(cin, gearname);
-    cout << endl << "\n输入摆线齿轮齿数:" << endl;
-    cin >> Z;
-    Preprocess original;
-    PointInspection pi;
-    istringstream iss(gearname);
-    string gear;
-    string assemblynum;
-    assemblynum.push_back(gearname[0]);
-    vector<string> svec;
-    if(isalpha(gearname[1]))
-        assemblynum.push_back(gearname[1]);
-    while (iss >> gear) {
-        cout << gear << endl;
-        svec.push_back(gear + "1");
-        svec.push_back(gear + "2");
-    }
-    for (const string& postfix : svec) {
-        bool flag = false;
-        CycloidGear rv;
-        file_name = foldername + "\\" + postfix + ".txt";
-        file_name1 = foldername + "\\" + postfix + "_dev.txt";
-        file_name3 = foldername + "\\" + postfix + "_mod.txt";
-        file_name2 = foldername + "\\" + postfix + "_pol.txt";
-
-        file_name10 = sharedFolder + postfix + "_dev.txt";
-        file_name30 = sharedFolder + postfix + "_mod.txt";
-        file_name20 = sharedFolder + postfix + "_pol.txt";
-        ifstream ifs(file_name);
-        if (ifs) {
-            ifs.close();
-            cout << endl << "<" << file_name << "> is processing..." << endl;
-            original.readData(file_name, rv.zeiss);
-            original.Car2Pol(rv.zeiss, rv.zeiss_pol);
-            if (pi.DisorderInspection(rv.zeiss_pol)) {
-                if (!pi.DuplicateInspection(rv.zeiss)) {
-                    if (pi.AxisToAddendum(rv.zeiss, rv.zeiss_pol))
-                        pi.PointRotation(rv.zeiss, rv.zeiss_pol, 3.1415926 / Z);
-                    pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol, Z);
-                    original.writeDataDev(file_name1, rv.zeiss);
-                    original.writeDataMod(file_name3, rv.zeiss);
-                    original.writeDataDev(file_name2, rv.zeiss_pol);
-                    flag = true;
-                }
-                //pi.PointRotation(rv.zeiss, rv.zeiss_pol, -(rv.zeiss_pol[0].second));   
+            string foldername;
+            string file_name; //= "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031.txt";
+            string file_name1, file_name2, file_name3; //= "E:\\10C\\00 摆线轮齿形分析\\01 修形用点\\T031_pol.txt";
+            string file_name10, file_name20, file_name30;
+            cout << "\n**********************************************\n" << endl;
+            string gearname;
+            string sharedFolder = "\\\\172.21.110.160\\技术部共享\\RV-项目\\03-数据分析\\摆线点云\\";
+            int Z = 0;
+            cout << "输入原始点云所在文件夹位置:" << endl;
+            getline(cin, foldername);
+            cout << endl << "\n输入样机拆机编号（例如，10C输入T01 T02 T03）:" << endl;
+            getline(cin, gearname);
+            cout << endl << "\n输入摆线齿轮齿数:" << endl;
+            cin >> Z;
+            Preprocess original;
+            PointInspection pi;
+            istringstream iss(gearname);
+            string gear;
+            string assemblynum;
+            assemblynum.push_back(gearname[0]);
+            vector<string> svec;
+            if (isalpha(gearname[1]))
+                assemblynum.push_back(gearname[1]);
+            while (iss >> gear) {
+                cout << gear << endl;
+                svec.push_back(gear + "1");
+                svec.push_back(gear + "2");
             }
-        }
-        else
-            cout << file_name << " does not exist!" << endl; 
-        if (flag)
-            cout << file_name << " is converted successfully!" << endl;
-        else
-            cout << "Problems above occurs, " << file_name << " has not been converted!" << endl;
-    }
-    cout << endl << "Conversion finished!" << endl;
+            for (const string& postfix : svec) {
+                bool flag = false;
+                CycloidGear rv;
+                file_name = foldername + "\\" + postfix + ".txt";
+                file_name1 = foldername + "\\" + postfix + "_dev.txt";
+                file_name3 = foldername + "\\" + postfix + "_mod.txt";
+                file_name2 = foldername + "\\" + postfix + "_pol.txt";
 
-    while (1)
-    {
-        int x;
-        cin >> x;
-    }
+                file_name10 = sharedFolder + postfix + "_dev.txt";
+                file_name30 = sharedFolder + postfix + "_mod.txt";
+                file_name20 = sharedFolder + postfix + "_pol.txt";
+                ifstream ifs(file_name);
+                if (ifs) {
+                    ifs.close();
+                    cout << endl << "<" << file_name << "> is processing..." << endl;
+                    original.readData(file_name, rv.zeiss);
+                    original.Car2Pol(rv.zeiss, rv.zeiss_pol);
+                    if (pi.DisorderInspection(rv.zeiss_pol)) {
+                        if (!pi.DuplicateInspection(rv.zeiss)) {
+                            if (pi.AxisToAddendum(rv.zeiss, rv.zeiss_pol))
+                                pi.PointRotation(rv.zeiss, rv.zeiss_pol, -3.1415926 / Z);
+                            pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol, Z);
+                            original.writeDataDev(file_name1, rv.zeiss);
+                            original.writeDataMod(file_name3, rv.zeiss);
+                            // original.writeDataDev(file_name2, rv.zeiss_pol);
+                            flag = true;
+                        }
+                        //pi.PointRotation(rv.zeiss, rv.zeiss_pol, -(rv.zeiss_pol[0].second));   
+                    }
+                }
+                else
+                    cout << file_name << " does not exist!" << endl;
+                if (flag)
+                    cout << file_name << " is converted successfully!" << endl;
+                else
+                    cout << "Problems above occurs, " << file_name << " has not been converted!" << endl;
+            }
+            cout << endl << "Conversion finished!" << endl;
 
     return 0;
 }
