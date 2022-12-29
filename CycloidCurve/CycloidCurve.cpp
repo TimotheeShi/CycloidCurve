@@ -62,7 +62,7 @@ int main()
                             pi.SwitchInitialPoint(rv.zeiss, rv.zeiss_pol, Z);
                             original.writeDataDev(file_name1, rv.zeiss);
                             original.writeDataMod(file_name3, rv.zeiss);
-                            // original.writeDataDev(file_name2, rv.zeiss_pol);
+                            original.writeDataDev(file_name2, rv.zeiss_pol);
                             flag = true;
                         }
                         //pi.PointRotation(rv.zeiss, rv.zeiss_pol, -(rv.zeiss_pol[0].second));   
